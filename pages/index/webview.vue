@@ -18,7 +18,7 @@
 			handleMessage(evt){
 				let msg = evt.detail.data;
 				uni.navigateTo({
-					url:"login?login=suc",
+					url:"index?login=success",
 				})
 			}
 		}

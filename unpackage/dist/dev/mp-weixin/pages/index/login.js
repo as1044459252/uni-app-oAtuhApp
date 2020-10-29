@@ -172,30 +172,30 @@ __webpack_require__.r(__webpack_exports__);
 var _default =
 {
   onLoad: function onLoad(option) {
-    if (option.login == 'suc') {
-      uni.request({
-        url: 'http://192.168.196.1:8081/checkLogin',
-        success: function success(res) {
-          //console.log(res.data);
-          if (res.data != 'error') {
-            var qqNumber = res.data;
-            uni.navigateTo({
-              url: './index?qqNumber=' + qqNumber });
-
-          }
-        },
-        fail: function fail() {
-          uni.showToast({
-            title: "登录失败，请重试" });
-
-        } });
-
-    }
+    //以下是跳转到首页再跳转到主页的方式，废弃。现在使用直接跳转到主页再使用ajax的方式
+    /*if(option.login=='suc'){
+    	uni.request({
+    		url: 'http://10.0.2.2:8081/checkLogin',
+    		success: (res) => {
+    			//console.log(res.data);
+    			if(res.data!='error'){
+    				let qqNumber = res.data;
+    				uni.navigateTo({
+    					url: './index?qqNumber='+qqNumber,
+    				})
+    			}
+    		},
+    		fail: () => {
+    			uni.showToast({
+    				title:"登录失败，请重试",
+    			})
+    		}
+    	})
+    }*/
   },
   data: function data() {
     return {
       href: 'https://uniapp.dcloud.io/component/README?id=uniui' };
-
 
   },
   methods: {
@@ -222,21 +222,23 @@ var _default =
           window.open(href);
         } });
 
-      var intervalID = setInterval(checkLogin, 1000);
-      function checkLogin() {
-        uni.request({
-          url: 'http://localhost:8081/checkLogin',
-          success: function success(res) {
-            if (res.data !== 'error') {
-              var qqNumber = res.data;
-              uni.navigateTo({
-                url: './index?qqNumber=' + qqNumber });
-
-              clearInterval(intervalID);
-            }
-          } });
-
-      }
+      //下面是ajax轮询，已经废弃
+      /*
+      let intervalID = setInterval(checkLogin,1000);
+      function checkLogin(){
+      	uni.request({
+      		url: 'http://localhost:8081/checkLogin',
+      		success: (res) => {
+      			if(res.data!=='error'){
+      				let qqNumber = res.data;
+      				uni.navigateTo({
+      					url: './index?qqNumber='+qqNumber,
+      				})
+      				clearInterval(intervalID);
+      			}
+      		}
+      	})
+      }*/
     },
     toWx: function toWx() {
       uni.login({
@@ -248,7 +250,7 @@ var _default =
             success: function success(res) {
               console.log(res);
               uni.navigateTo({
-                url: './index?qqNumber=' + res.userInfo.nickName });
+                url: './index?login=' + res.userInfo.nickName });
 
             },
             fail: function fail() {
@@ -267,7 +269,7 @@ var _default =
     },
     toWv: function toWv() {
       uni.request({
-        url: 'http://192.168.196.1:8081/toOauthQQLogin',
+        url: 'http://10.0.2.2:8081/toOauthQQLogin',
         method: 'GET',
         success: function success(res) {
           var href = res.data;

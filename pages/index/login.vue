@@ -21,8 +21,8 @@
 		<navigator url="register">
 		<button>去注册</button>
 		</navigator>
-		<button @click="toQQ">使用QQ登录</button>
-		<button open-type="getUserInfo" lang="zh_CN" @getuserinfo="toWx">使用微信登录</button>
+		<button @click="toQQ">H5使用模拟QQ登录</button>
+		<button open-type="getUserInfo" lang="zh_CN" @getuserinfo="toWx">小程序使用微信登录</button>
 		<button @click="toWv">使用web-view登录</button>
 		
 	</view>
@@ -31,7 +31,8 @@
 <script>
 	export default {
 		onLoad:function(option){
-			if(option.login=='suc'){
+			//以下是跳转到首页再跳转到主页的方式，废弃。现在使用直接跳转到主页再使用ajax的方式
+			/*if(option.login=='suc'){
 				uni.request({
 					url: 'http://10.0.2.2:8081/checkLogin',
 					success: (res) => {
@@ -49,12 +50,11 @@
 						})
 					}
 				})
-			}		
+			}*/		
 		},
 		data() {
 			return {
-				href: 'https://uniapp.dcloud.io/component/README?id=uniui',
-				
+				href: 'https://uniapp.dcloud.io/component/README?id=uniui',	
 			}
 		},
 		methods: {
@@ -81,6 +81,8 @@
 						window.open(href);
 					}
 				})
+				//下面是ajax轮询，已经废弃
+				/*
 				let intervalID = setInterval(checkLogin,1000);
 				function checkLogin(){
 					uni.request({
@@ -95,7 +97,7 @@
 							}
 						}
 					})
-				}
+				}*/
 			},
 			toWx(){
 				uni.login({
@@ -107,14 +109,14 @@
 							success: (res) => {
 								console.log(res);
 								uni.navigateTo({
-									url: './index?qqNumber='+res.userInfo.nickName,
+									url: './index?login='+res.userInfo.nickName,
 								})
 							},
 							fail: () => {
 								uni.showToast({
 									title:"授权失败",
 								})
-							}
+							} 
 						})
 					},
 					fail: () => {

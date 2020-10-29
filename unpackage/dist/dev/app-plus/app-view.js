@@ -327,7 +327,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("使用QQ登录")]
+        [_vm._v("H5使用模拟QQ登录")]
       ),
       _c(
         "v-uni-button",
@@ -339,7 +339,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("使用微信登录")]
+        [_vm._v("小程序使用微信登录")]
       ),
       _c(
         "v-uni-button",

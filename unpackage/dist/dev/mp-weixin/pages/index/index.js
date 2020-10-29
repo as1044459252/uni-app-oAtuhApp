@@ -130,20 +130,56 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
 var _default =
 {
-  onLoad: function onLoad(option) {
-    this.qqNumber = option.qqNumber;
+  onLoad: function onLoad(option) {var _this = this;
+    if (option.login == 'success') {
+      //处理本地开发移动端和PC端localhost的问题
+      var url = 'http://localhost:8081/checkLogin';
+
+
+
+
+      url = url.replace('localhost', '10.0.2.2');
+
+      console.log(url);
+      uni.request({
+        url: url,
+        data: {},
+        success: function success(res) {
+          _this.qqNumber = res.data;
+        } });
+
+    } else
+    {
+      this.qqNumber = option.login;
+    }
   },
   data: function data() {
     return {
       qqNumber: '' };
 
-  } };exports.default = _default;
+  },
+  methods: {
+    isPC: function isPC() {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = ["Android", "iPhone",
+      "SymbianOS", "Windows Phone",
+      "iPad", "iPod"];
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false;
+          break;
+        }
+      }
+      return flag;
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

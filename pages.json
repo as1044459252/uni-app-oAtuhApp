@@ -22,7 +22,16 @@
 		"style": {
 			"navigationBarTitleText": "web-view"
 		}
-	}],
+	}    
+        ,{
+            "path" : "pages/index/user",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/admin",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
