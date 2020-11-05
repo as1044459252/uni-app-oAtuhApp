@@ -14,26 +14,48 @@
 		onLoad:function(option){
 			if(option.login=='success'){
 				//处理本地开发移动端和PC端localhost的问题
-				let url = 'http://localhost:8081/checkLogin';
+				let url = 'http://localhost:8081/getLoginInfo';
 				//#ifdef APP-PLUS
 				url = url.replace('localhost','10.0.2.2');
 				//#endif
 				//#ifdef MP-WEIXIN
 				url = url.replace('localhost','10.0.2.2');
 				//#endif
-				console.log(url);
+				
 				uni.request({
 					url: url,
 					data: {},
 					success: (res) => {
-						console.log(res.data)
+						console.log(res.data);
+						this.qqNumber = res.data.qqNumber;
+						this.token = res.data.token;
+						
+						uni.redirectTo({
+							url:"index?token="+this.token,
+						})
+					}
+				})
+			}
+			//链接中带有token
+			if(option.token){
+				let url = 'http://localhost:8081/checkLogin?token='+option.token;
+				//#ifdef APP-PLUS
+				url = url.replace('localhost','10.0.2.2');
+				//#endif
+				//#ifdef MP-WEIXIN
+				url = url.replace('localhost','10.0.2.2');
+				//#endif
+				
+				uni.request({
+					url: url,
+					data: {},
+					success: (res) => {
+						console.log(res.data);
 						this.qqNumber = res.data.qqNumber;
 						this.token = res.data.token;
 					}
 				})
-			}
-			else{
-				this.qqNumber=option.login;
+				
 			}
 		},
 		data() {
@@ -63,15 +85,11 @@
 					})
 				},
 				toAdmin(){
-					let role = getRole(this.token);
 					uni.navigateTo({
 						url:"admin?token="+this.token,
 					})
 				},
-				//获取权限/角色等
-				getRole(token){
-					
-				}
+				
 		}
 	}
 </script>
